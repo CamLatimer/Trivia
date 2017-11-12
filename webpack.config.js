@@ -27,7 +27,6 @@ function configMaker(env){
     config.entry = {
       // include the hot middleware with each entry point
       client: [__dirname + '/client/js/client.js', hotMiddlewareScript],
-      form: [__dirname + '/client/js/form.js', hotMiddlewareScript]
     },
     config.plugins = [
       new webpack.NoEmitOnErrorsPlugin(),
@@ -37,7 +36,6 @@ function configMaker(env){
   } else if(env === 'build' ) {
     config.entry = {
       client: __dirname + '/client/js/client.js',
-      form: __dirname + '/client/js/form.js'
     },
     config.plugins = [
       new webpack.optimize.UglifyJsPlugin()

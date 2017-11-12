@@ -54,7 +54,7 @@ gulp.task('nodemon', function (cb) {
     ignore: [
       'gulpfile.js',
       'node_modules/',
-      // 'client/**/*.js'
+      'client/**/*.js'
     ]
   })
   .on('start', function () {
