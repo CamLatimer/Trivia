@@ -72,6 +72,7 @@ export default class QuestionsContainer extends React.Component {
               correctAnswer={q.correct_answer}
               answersArray={q.incorrect_answers}
               answerReady={this.state.answerReady}
+              calcScore={this.props.calcScore}
             />
           );
         });

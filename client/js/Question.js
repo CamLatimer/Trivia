@@ -8,6 +8,7 @@ export default class Question extends React.Component {
         super(props);
         this.state = {};
         this.handleAnswerSelection = this.handleAnswerSelection.bind(this);
+        this.cleanEntities = this.cleanEntities.bind(this);
       }
 
       // run when a trivia answer is selected.
@@ -25,6 +26,12 @@ export default class Question extends React.Component {
           this.setState(() => ({
             correctAnswer: this.props.correctAnswer
           }))
+          if(e.target.value === this.props.correctAnswer){
+            this.props.calcScore(true);
+          } else {
+            this.props.calcScore(false);
+          }
+          // check to see if selected answer is same as correct answer
         }
       }
 
@@ -32,15 +39,21 @@ export default class Question extends React.Component {
 
       }
 
+      // had to set innerHTML in order to clear out html entities that
+      // that come back with api data
+      cleanEntities(text){
+        let cleanText = text;
+        return {__html: cleanText};
+      }
+
       render(){
         let correctAnswer = null;
         // conditonal is a way to check if an answer has been selected
         if(this.state.correctAnswer === this.props.correctAnswer){
-          correctAnswer = <div>{this.state.correctAnswer}</div>
+          correctAnswer = <div dangerouslySetInnerHTML={this.cleanEntities(this.state.correctAnswer)}></div>
         } else {
           correctAnswer = null;
         }
-
         // map the answer options out into radio buttons
         let answersArray = this.props.answersArray.map((answer, index) => {
           return (
@@ -50,7 +63,8 @@ export default class Question extends React.Component {
                   checked={this.props.isRadioChecked}
                   onClick={this.handleAnswerSelection}
                   type="radio" name={`answer${this.props.answerIndex}`} value={answer} />
-              {answer}
+                  <span dangerouslySetInnerHTML={this.cleanEntities(answer)} />
+
               </div>
             </label>
           );
@@ -58,7 +72,7 @@ export default class Question extends React.Component {
 
         return(
           <div>
-              {this.props.question}
+            <p dangerouslySetInnerHTML={this.cleanEntities(this.props.question)}></p>
             <div>
               {answersArray}
             </div>
