@@ -12,27 +12,14 @@ export default class QuestionsContainer extends React.Component {
     super(props);
     this.state = {
       questions: [],
-      isRadioChecked: false,
     };
-    this.getRandomQuestions = this.getRandomQuestions.bind(this);
-    this.start = this.start.bind(this);
-    this.checkRadio = this.checkRadio.bind(this);
-  }
-
-  // enables radio buttons
-  checkRadio(e){
-    e.target.checked = true;
-    if(this.state.isRadioChecked !== null){
-      this.setState(() => ({
-        isRadioChecked: null
-      }))
-    }
+    this.getQuestions = this.getQuestions.bind(this);
   }
 
   // make call to questions api and update the state
   // add correct answer and incorrect answers into a randomized array
   // to be passed down as props
-  getRandomQuestions(){
+  getQuestions(){
     axios.get('https://opentdb.com/api.php?amount=10')
          .then((res) => {
            console.log(res.data.results);
@@ -44,21 +31,17 @@ export default class QuestionsContainer extends React.Component {
            return dbQuestions;
          })
          .then((dbQuestions) => {
-           this.setState(()=>({
-             questions: dbQuestions,
-             isRadioChecked: false,
+           this.setState((prevState)=>({
+             questions: prevState.questions.concat(dbQuestions),
            }))
          })
          .catch(error => {
            console.log('error getting and parsing data');
          })
   }
-  start(){
-    this.getRandomQuestions();
-  }
 
   componentDidMount(){
-    this.start();
+    this.getQuestions();
   }
   render(){
     const questionEls = this.state.questions.map((q, index) =>{
@@ -78,11 +61,10 @@ export default class QuestionsContainer extends React.Component {
         });
     return (
       <div>
-        <button onClick={this.start}>Get More Questions</button>
           <div>
               {questionEls}
           </div>
-        <button onClick={this.start}>Get More Questions</button>
+        <button onClick={this.getQuestions}>Get More Questions</button>
       </div>
     );
   }

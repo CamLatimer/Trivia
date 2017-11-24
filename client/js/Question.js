@@ -18,20 +18,19 @@ export default class Question extends React.Component {
       // if state is updated with correct answer, disable the radio buttons.
       // (todo: come up with a way to make that less complex?)
       handleAnswerSelection(e){
-        this.props.checkRadio(e);
         if(this.state.correctAnswer === this.props.correctAnswer){
           e.preventDefault();
-          e.target.disabled = true;
+          e.target.focus = false;
         } else {
           this.setState(() => ({
             correctAnswer: this.props.correctAnswer
           }))
+          // check to see if selected answer is same as correct answer
           if(e.target.value === this.props.correctAnswer){
             this.props.calcScore(true);
           } else {
             this.props.calcScore(false);
           }
-          // check to see if selected answer is same as correct answer
         }
       }
 
@@ -60,7 +59,6 @@ export default class Question extends React.Component {
             <label key={index}>
               <div>
                 <input
-                  checked={this.props.isRadioChecked}
                   onClick={this.handleAnswerSelection}
                   type="radio" name={`answer${this.props.answerIndex}`} value={answer} />
                   <span dangerouslySetInnerHTML={this.cleanEntities(answer)} />
