@@ -4,19 +4,44 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  Redirect
 } from 'react-router-dom';
 
 
-export default function Routes() {
-  return (
-    <Router>
-      <div>
-        <li><Link to="/play">Play</Link></li>
-        <li><Link to="/">Home</Link></li>
-        <Route exact path="/" component={Home}/>
-        <Route path="/play" component={Game}/>
-      </div>
-    </Router>
-  );
+export default class Routes extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      loggedIn: false
+    };
+    this.setLogin = this.setLogin.bind(this);
+  }
+
+  setLogin(){
+    this.setState({
+      loggedIn: true
+    })
+  }
+
+  render(){
+    let loggedIn = this.state.loggedIn;
+    console.log(this.state.loggedIn);
+    return (
+      <Router>
+        <div>
+          <Route exact path="/" render={() => (
+            loggedIn ? (
+              <Redirect push to="/game"/>
+            ) : (
+              <Home setLogin={this.setLogin}/>
+            )
+          )} />
+          <Route path="/game" component={Game} />
+        </div>
+      </Router>
+    );
+  }
+
 }

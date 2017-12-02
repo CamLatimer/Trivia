@@ -20,7 +20,7 @@ db.on('open', function(){
 // create schemas & models
   const userSchema = new Schema({
     createdAt: {type: Date, default: Date.now},
-    username: String
+    email: String
   })
   const User = mongoose.model('User', userSchema);
 
@@ -33,11 +33,13 @@ db.on('open', function(){
 
         // create some documents
         const theOg = new User({
-          username: 'og_user@test.com'
+          email: 'og_user@test.com',
+          password: 'password'
         })
 
         const testUser = new User({
-          username: 'testUser@test.com'
+          email: 'testUser@test.com',
+          password: 'password'
         })
 
 
