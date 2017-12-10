@@ -24,7 +24,6 @@ class GameForm extends React.Component {
   }
 
   render(){
-    console.log(this.state);
     let isReady = true;
     if(this.state.email.length && this.state.password.length){
       isReady = false;
@@ -70,21 +69,31 @@ export default class Home extends React.Component{
   sendRegister(e, email, password){
     axios.post('http://localhost:3000/register', {
       email: email,
-      password: password,
-      loggedIn: false
+      password: password
+    })
+    .then((res) => {
+      if(res.status === 200){
+        this.props.setLogin(res.data.email);
+      }
+    })
+    .catch((error) => {
+      console.log(error.messeage);
+    });
+  }
+  sendLogin(e, email, password){
+    axios.put('http://localhost:3000/login', {
+      email: email,
+      password: password
     })
     .then((res) => {
       console.log(res);
-      console.log(res.status);
       if(res.status === 200){
-        this.props.setLogin();
+        this.props.setLogin(res.data.email);
       }
     })
     .catch((error) => {
       console.log(error);
     });
-  }
-  sendLogin(e){
   }
   render(){
     return(

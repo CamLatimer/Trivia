@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 
-const db = require('../db/database');
+const db = require('../db/models');
 
 let User = db.User;
 // Users

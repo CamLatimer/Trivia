@@ -3,10 +3,12 @@ require('dotenv').load();
 // seed the database with dummy data
 
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise; //use es6 promises
+const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 // 27017 is mongodb's default port
-mongoose.connect(process.env.MONGOURI, {useMongoClient: true}, (err) => {
+mongoose.connect(process.env.MONGOURI, {useMongoClient: true, options: { promiseLibrary: mongoose.Promise }}, (err) => {
   if(err) {
     console.log(err);
   } else {
@@ -20,8 +22,27 @@ db.on('open', function(){
 // create schemas & models
   const userSchema = new Schema({
     createdAt: {type: Date, default: Date.now},
-    email: String
+    email: {
+      type:String,
+      unique: true,
+      required: true
+    },
+    password: {
+      type: String,
+      required: true
+    }
   })
+  // hash password before saving to database
+  userSchema.pre('save', function(next){
+    let user = this;
+    bcrypt.hash(user.password, 10, function(err, hash){
+      if(err){
+        return next(err);
+      }
+      user.password = hash;
+      next();
+    });
+  });
   const User = mongoose.model('User', userSchema);
 
 // remove previous collection(s).  when done, create and save new models, then close the db

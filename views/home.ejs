@@ -1,3 +1,15 @@
 <%- include('header') %>
 <div id="root"></div>
+<!-- inject script tag to let bundle.js know
+if user is logged in or not for a session -->
+<% if(loggedIn === true){ %>
+  <script>
+    var isUserLoggedIn = true;
+    var userEmail = '<%= sessionEmail %>';
+  </script>
+  <% } else { %>
+  <script>
+    var isUserLoggedIn = false;
+  </script>
+<%  }%>
 <%- include('footer') %>

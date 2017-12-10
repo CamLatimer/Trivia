@@ -2,10 +2,25 @@ require('dotenv').load();
 
 const express = require('express');
 const app = express();
-const db = require('./db/database');
 const api = require('./routes/api');
 const pages = require('./routes/pages');
-db.dbConnect();
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+
+// setup a browser session and store sessions in a mongodb collection with connect-mongo
+app.use(session({
+  secret: 'secret sauce',
+  resave: true,
+  saveUninitialized: false,
+  cookie:{
+    maxAge: 24 * 60 * 60 * 1000
+  },
+  store: new MongoStore({
+    url: process.env.MONGOURI,
+    ttl: 14 * 24 * 60 * 60 // = 14 days. Default} ),
+    // mongo-connect will clear out stored sessions
+  })
+}));
 
 // serve static files from /dist, use '/dist' as a mount path for proxies, middleware, etc.
 app.use('/dist', express.static('dist'))

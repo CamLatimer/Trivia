@@ -11,7 +11,7 @@ export default class App extends React.Component {
       numCorrect: 0
     };
     this.calcScore = this.calcScore.bind(this);
-
+    this.logOut = this.logOut.bind(this);
   }
 
   // count the amount of questions answered and get a percentage of
@@ -33,10 +33,17 @@ export default class App extends React.Component {
     }
   }
 
+  logOut(e){
+    e.preventDefault();
+    this.props.logOut();
+  }
+
   render(){
     let score = ((this.state.numCorrect / this.state.numAnswered) * 100).toFixed(2);
   return (
     <div>
+      <p>hello, {this.props.email}</p>
+      <button onClick={this.logOut}>Log Out</button>
       <Score score={this.state.numAnswered === 0? 0 : score}/>
       <QuestionsContainer calcScore={this.calcScore} />
     </div>
