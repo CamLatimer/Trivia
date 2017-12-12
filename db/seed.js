@@ -30,7 +30,10 @@ db.on('open', function(){
     password: {
       type: String,
       required: true
-    }
+    },
+    accuracy: {type: Number, default: 0},
+    attempts: {type: Number, default: 0},
+    correct: {type: Number, default: 0}
   })
   // hash password before saving to database
   userSchema.pre('save', function(next){

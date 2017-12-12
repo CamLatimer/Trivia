@@ -13,12 +13,16 @@ app.use(session({
   resave: true,
   saveUninitialized: false,
   cookie:{
-    maxAge: 24 * 60 * 60 * 1000
+    maxAge: 24 * 60 * 60 * 1000,
+    // secure: true
+    // hook up security stuff (https, etc) in the future
   },
   store: new MongoStore({
     url: process.env.MONGOURI,
-    ttl: 14 * 24 * 60 * 60 // = 14 days. Default} ),
-    // mongo-connect will clear out stored sessions
+  // connect-mongo will use express-session's cookie.maxAge for expiration time,
+  // else just set store.ttl like below:
+  // ttl: 14 * 24 * 60 * 60 // = 14 days. Default} ),
+  // mongo-connect will clear out stored sessions at the expiration time
   })
 }));
 

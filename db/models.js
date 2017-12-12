@@ -24,7 +24,10 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  accuracy: {type: Number, default: 0},
+  attempts: {type: Number, default: 0},
+  correct: {type: Number, default: 0}
 })
 
 // authenticate users

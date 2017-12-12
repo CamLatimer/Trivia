@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 export default function Score(props){
   return (
     <div>
-      <h3>Score: {props.score}% of answers attempted</h3>
+      <h3>Accuracy: {props.score}%</h3>
     </div>
   )
 }

@@ -16,10 +16,11 @@ router.use(bodyParser.urlencoded({ extended: false}))
 
 // return the homepage
 router.get('/', (req, res) => {
-    if(req.session.sessionId && req.session.sessionEmail){
+    if(req.session.sessionId && req.session.sessionEmail && req.session.score){
       res.render('home', {
         loggedIn: true,
-        sessionEmail: `${req.session.sessionEmail}`
+        sessionEmail: `${req.session.sessionEmail}`,
+        sessionScore: req.session.score
       });
     } else {
       res.render('home', {loggedIn: false});
@@ -28,7 +29,7 @@ router.get('/', (req, res) => {
 
 router.post('/register', bodyParser.json(), (req, res, next) => {
 
-  // create a user document then set sessionId in a cookie
+  // create a user document then initialize user info for the session and pass it to front end
   if(req.body.email && req.body.password){
     let userToAdd = new User ({
       email: req.body.email,
@@ -39,10 +40,16 @@ router.post('/register', bodyParser.json(), (req, res, next) => {
         return next(error);
       } else {
         req.session.sessionId = user._id;
-        req.session.sessionEmail = user.email
+        req.session.sessionEmail = user.email;
+        req.session.score = {
+          accuracy: 0,
+          attempts: 0,
+          correct: 0
+        };
         return res.json({
-          "sessionId": req.session.sessionId,
-          "email": req.session.sessionEmail
+          sessionId: req.session.sessionId,
+          email: req.session.sessionEmail,
+          score: req.session.score
         });
       }
     })
@@ -53,9 +60,8 @@ router.post('/register', bodyParser.json(), (req, res, next) => {
   }
 });
 
+// authenticate user and set user info in session variables
 router.put('/login', bodyParser.json(), (req, res, next) => {
-  
-  // authenticate user and set browser sessionId in a cookie
   if(req.body.email && req.body.password){
     User.authenticate(req.body.email, req.body.password, function(error, user){
       if(error || !user){
@@ -64,10 +70,16 @@ router.put('/login', bodyParser.json(), (req, res, next) => {
         return next(err);
       } else {
         req.session.sessionId = user._id;
-        req.session.sessionEmail = user.email
+        req.session.sessionEmail = user.email;
+        req.session.score = {
+          accuracy: user.accuracy,
+          attempts: user.attempts,
+          correct: user.correct
+        };
         return res.json({
-          "sessionId": req.session.sessionId,
-          "email": req.session.sessionEmail
+          sessionId: req.session.sessionId,
+          email: req.session.sessionEmail,
+          score: req.session.score
         });
       }
     });
@@ -78,6 +90,7 @@ router.put('/login', bodyParser.json(), (req, res, next) => {
   }
 })
 
+// destroy session and set logout for front end
 router.put('/logout', (req, res, next) =>{
   req.session.destroy((err) => {
     if(err){
@@ -89,6 +102,27 @@ router.put('/logout', (req, res, next) =>{
     }
   })
 });
+
+// update the user's score stats
+router.put('/accuracyUpdate', bodyParser.json(), (req, res, next) => {
+  let updatedScore = {
+    accuracy: req.body.accuracy,
+    attempts: req.body.attempts,
+    correct: req.body.correct
+  }
+  User.findOneAndUpdate({email: req.body.email}, {$set: updatedScore}, {new: true}, function(err, user){
+    if(err){
+      return next(err);
+    } else {
+      req.session.score = {
+        accuracy: user.accuracy,
+        attempts: user.attempts,
+        correct: user.correct
+      };
+      res.json(user);
+    }
+  })
+})
 
 // admin routes
 router.get('/admin', (req, res) => {

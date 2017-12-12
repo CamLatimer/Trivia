@@ -73,7 +73,7 @@ export default class Home extends React.Component{
     })
     .then((res) => {
       if(res.status === 200){
-        this.props.setLogin(res.data.email);
+        this.props.setLogin(res.data.email, res.data.score);
       }
     })
     .catch((error) => {
@@ -88,7 +88,8 @@ export default class Home extends React.Component{
     .then((res) => {
       console.log(res);
       if(res.status === 200){
-        this.props.setLogin(res.data.email);
+        // set user info into the game via callback from Router.js
+        this.props.setLogin(res.data.email, res.data.score);
       }
     })
     .catch((error) => {
