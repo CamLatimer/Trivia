@@ -60,11 +60,9 @@ export default class QuestionsContainer extends React.Component {
           );
         });
     return (
-      <div>
-          <div>
+      <div className="QuestionsContainer">
               {questionEls}
-          </div>
-        <button onClick={this.getQuestions}>Get More Questions</button>
+        <button className="QuestionsContainer__btn getMoreBtn" onClick={this.getQuestions}>Get More Questions</button>
       </div>
     );
   }

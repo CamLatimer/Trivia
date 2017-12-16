@@ -29,32 +29,28 @@ class GameForm extends React.Component {
       isReady = false;
     }
     return (
-      <div>
-        <p>{this.props.formHeader}</p>
-        <form>
-          <div>
-            <label>
-              email:
-              <input
-                type="text"
-                name="email"
-                placeholder="email"
-                onChange={this.handleInput}/>
-            </label>
-          </div>
-          <div>
-            <label>
-              Password:
-              <input
-                type="text"
-                name="password"
-                placeholder="password"
-                onChange={this.handleInput}/>
-            </label>
-          </div>
-          <button onClick={this.submitData} disabled={isReady}>Submit</button>
-        </form>
-      </div>
+      <form className="GameForm">
+        <h1 className="GameForm__header">{this.props.formHeader}</h1>
+        <div className="GameForm__inputWrapper">
+          <label className="GameForm__label">
+            email:
+          </label>
+            <input className="GameForm__input"
+              type="text"
+              name="email"
+              placeholder="email"
+              onChange={this.handleInput}/>
+              <label>
+                password:
+              </label>
+            <input className="GameForm__input"
+              type="password"
+              name="password"
+              placeholder="password"
+              onChange={this.handleInput}/>
+        </div>
+        <button onClick={this.submitData} disabled={isReady}>Submit</button>
+      </form>
     );
   }
 }
@@ -98,7 +94,7 @@ export default class Home extends React.Component{
   }
   render(){
     return(
-      <div>
+      <div className="auth">
         <GameForm
           formHeader={'Register: '} handleSubmit={this.sendRegister} />
         <GameForm

@@ -1,10 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import Header from './Header';
 import QuestionsContainer from './QuestionsContainer';
 import axios from 'axios';
 import Score from './Score';
 
-export default class App extends React.Component {
+export default class Game extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -59,10 +59,10 @@ export default class App extends React.Component {
   render(){
   return (
     <div>
-      <p>hello, {this.props.email}</p>
-      <button onClick={this.logOut}>Log Out</button>
-      <Score score={this.state.attempts === 0 ? 0 : this.state.accuracy}/>
-      <button onClick={this.save}>Save</button>
+      <Header email={this.props.email}
+              logOut={this.logOut}
+              score={this.state.attempts === 0 ? 0 : this.state.accuracy}
+              save={this.save}/>
       <QuestionsContainer calcScore={this.calcScore} />
     </div>
     )

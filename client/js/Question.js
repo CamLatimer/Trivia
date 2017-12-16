@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 // this component shows the trivia question data
 export default class Question extends React.Component {
@@ -49,32 +48,34 @@ export default class Question extends React.Component {
         let correctAnswer = null;
         // conditonal is a way to check if an answer has been selected
         if(this.state.correctAnswer === this.props.correctAnswer){
-          correctAnswer = <div dangerouslySetInnerHTML={this.cleanEntities(this.state.correctAnswer)}></div>
+          correctAnswer = <div className="correctAnswer" dangerouslySetInnerHTML={this.cleanEntities(this.state.correctAnswer)}></div>
         } else {
           correctAnswer = null;
         }
         // map the answer options out into radio buttons
         let answersArray = this.props.answersArray.map((answer, index) => {
           return (
-            <label key={index}>
-              <div>
-                <input
-                  onClick={this.handleAnswerSelection}
-                  type="radio" name={`answer${this.props.answerIndex}`} value={answer} />
-                  <span dangerouslySetInnerHTML={this.cleanEntities(answer)} />
 
+              <div className="answer">
+                <label>
+                <input
+                  className="answer__input"
+                  onClick={this.handleAnswerSelection}
+                  type="radio" name={`answer${this.props.answerIndex}`} value={answer}
+                  />
+                  <span className="answer__text" key={index} dangerouslySetInnerHTML={this.cleanEntities(answer)}></span>
+                  </label>
               </div>
-            </label>
           );
         });
 
         return(
-          <div>
+          <div className="Question">
             <p dangerouslySetInnerHTML={this.cleanEntities(this.props.question)}></p>
-            <div>
+            <div className="Question__answers">
               {answersArray}
-            </div>
               {correctAnswer}
+            </div>
           </div>
         );
       }
