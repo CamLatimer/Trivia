@@ -12,6 +12,7 @@ export default class QuestionsContainer extends React.Component {
     super(props);
     this.state = {
       questions: [],
+      loading: true
     };
     this.getQuestions = this.getQuestions.bind(this);
   }
@@ -20,6 +21,10 @@ export default class QuestionsContainer extends React.Component {
   // add correct answer and incorrect answers into a randomized array
   // to be passed down as props
   getQuestions(){
+    // to show that questions are loading
+    this.setState(() => {
+      loading: true
+    })
     axios.get('https://opentdb.com/api.php?amount=10')
          .then((res) => {
            console.log(res.data.results);
@@ -33,6 +38,7 @@ export default class QuestionsContainer extends React.Component {
          .then((dbQuestions) => {
            this.setState((prevState)=>({
              questions: prevState.questions.concat(dbQuestions),
+             loading: false
            }))
          })
          .catch(error => {
@@ -44,6 +50,7 @@ export default class QuestionsContainer extends React.Component {
     this.getQuestions();
   }
   render(){
+    let showLoading = this.state.loading === false ? 'loadingOff' : 'loading loadingOn';
     const questionEls = this.state.questions.map((q, index) =>{
           return (
             <Question
@@ -62,6 +69,9 @@ export default class QuestionsContainer extends React.Component {
     return (
       <div className="QuestionsContainer">
               {questionEls}
+        <div className={showLoading}>
+          <h1>Getting Questions...</h1>
+        </div>
         <button className="QuestionsContainer__btn getMoreBtn" onClick={this.getQuestions}>Get More Questions</button>
       </div>
     );

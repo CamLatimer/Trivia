@@ -56,14 +56,14 @@ export default class Question extends React.Component {
         let answersArray = this.props.answersArray.map((answer, index) => {
           return (
 
-              <div className="answer">
+              <div className="answer" key={index}>
                 <label>
                 <input
                   className="answer__input"
                   onClick={this.handleAnswerSelection}
                   type="radio" name={`answer${this.props.answerIndex}`} value={answer}
                   />
-                  <span className="answer__text" key={index} dangerouslySetInnerHTML={this.cleanEntities(answer)}></span>
+                  <span className="answer__text" dangerouslySetInnerHTML={this.cleanEntities(answer)}></span>
                   </label>
               </div>
           );

@@ -36,6 +36,12 @@ header p, .header__btnWrapper{
 .header__btn a:visited, a.saveWide:visited{
   color: #9b4dca;
 }
+.save{
+  cursor: pointer;
+}
+.saveSmall{
+  margin-right: 3rem;
+}
 .saveWide{display: none;}
 @media screen and (min-width:550px){
   header{
@@ -59,6 +65,7 @@ header p, .header__btnWrapper{
   }
   .saveWide{
     display: inline; margin-left:1rem;
+    position: absolute;
   }
   .saveSmall{
     display: none;
@@ -80,7 +87,7 @@ header p, .header__btnWrapper{
 .QuestionsContainer{
   position: relative;
   width: 100%;
-  top:180px;
+  padding-top:180px;
   width: 85%;
   margin:auto;
   padding-bottom:5rem;
@@ -115,4 +122,28 @@ header p, .header__btnWrapper{
   display: block;
   width: 206px;
   margin:auto;
+}
+
+// loading placeholder
+.loading{
+  width: 100%;
+}
+.loading h1{
+  width: 100%; text-align: center;
+  color: aquamarine;
+}
+.loadingOff{
+  display: none;
+}
+.loadingOn{
+  display: flex;
+  animation: loadingBlink .5s infinite;
+}
+@keyframes loadingBlink{
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
 }

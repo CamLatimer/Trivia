@@ -2,7 +2,6 @@ import React from 'react';
 import Header from './Header';
 import QuestionsContainer from './QuestionsContainer';
 import axios from 'axios';
-import Score from './Score';
 
 export default class Game extends React.Component {
   constructor(props){
@@ -11,7 +10,8 @@ export default class Game extends React.Component {
       attempts: this.props.attempts,
       correct: this.props.correct,
       accuracy: this.props.accuracy,
-      email: this.props.email
+      email: this.props.email,
+      saveInProgress: false
     };
     this.calcScore = this.calcScore.bind(this);
     this.logOut = this.logOut.bind(this);
@@ -44,12 +44,34 @@ export default class Game extends React.Component {
     this.props.logOut();
   }
   // tell server to update user's stats
+  // show that saving is in progress and show that updated stats were saved
   save(e){
-    console.log(this.state);
     e.preventDefault();
+
+    // show saving in progress
+    this.setState({
+      saveInProgress: true
+    })
+    console.log('saving');
+    let saveBtn = e.target;
+    saveBtn.innerHTML = 'Saving...'
+    saveBtn.style.color = 'lightGrey';
+
     axios.put('http://localhost:3000/accuracyUpdate', this.state)
     .then((res) => {
-      console.log(res);
+      // show that data has been saved after res from server is good
+      setTimeout(() => {
+        saveBtn.innerHTML = 'SAVED!';
+        saveBtn.style.color = 'aquamarine';
+      }, 1000);
+      setTimeout(() => {
+        saveBtn.innerHTML = 'Save';
+        saveBtn.style.color = '#9b4dca';
+        this.setState({
+          saveInProgress: false
+        });
+        console.log('saved');
+      }, 2000);
     })
     .catch((err) => {
       console.log(err.message);
@@ -58,11 +80,12 @@ export default class Game extends React.Component {
 
   render(){
   return (
-    <div>
+    <div className="Game">
       <Header email={this.props.email}
               logOut={this.logOut}
               score={this.state.attempts === 0 ? 0 : this.state.accuracy}
-              save={this.save}/>
+              // set save function conditionally so users don't make ajax calls repeatedly
+              save={this.state.saveInProgress === false ? this.save : null}/>
       <QuestionsContainer calcScore={this.calcScore} />
     </div>
     )
