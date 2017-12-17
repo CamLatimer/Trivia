@@ -11,6 +11,7 @@ h1,h2,h3,h4,h5{
 // site header
 header{
   width: 100%;
+  height: 115px;
   position: fixed;
   background: white;
   display: flex;
@@ -40,25 +41,26 @@ header p, .header__btnWrapper{
   cursor: pointer;
 }
 .saveSmall{
-  margin-right: 3rem;
+  margin-right: 2rem;
 }
 .saveWide{display: none;}
 @media screen and (min-width:550px){
   header{
     align-items: flex-end;
+    justify-content: flex-end;
     z-index:1000;
-    padding:.5rem 1rem;
+    padding:6rem 1rem 0 1rem;
     box-shadow: 0px 0px 8px;
-    height: 75px;
+    height: 115px;
   }
   header p{
     margin-bottom: 0;
   }
+
   .header__accuracy{
-    order:0;
     align-self: flex-start;
     order:1;
-    margin-bottom:.5rem;
+    margin-bottom:1rem;
   }
   .header__btnWrapper{
     margin-bottom:0;
@@ -74,7 +76,7 @@ header p, .header__btnWrapper{
 
 // login / signup forms
 .auth{
-  width: 90%; margin:auto; max-width: 500px;
+  width: 90%; margin:auto; padding-top:130px; max-width: 500px;
 }
 .GameForm__input{
   margin-bottom:2rem;

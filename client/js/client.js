@@ -1,10 +1,10 @@
-import Router from './Router';
+import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 ReactDOM.render(
   // grab value of isUserLoggedIn and user info from script injected before bundle.js
-  <Router loggedIn={isUserLoggedIn}
+  <App loggedIn={isUserLoggedIn}
     email={isUserLoggedIn ? userEmail : null}
     attempts={isUserLoggedIn ? attempts : null}
     correct={isUserLoggedIn  ? correct : null}
