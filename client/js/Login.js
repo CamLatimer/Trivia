@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import validator from 'email-validator';
 
 
 class GameForm extends React.Component {
@@ -20,7 +21,11 @@ class GameForm extends React.Component {
   }
   submitData(e){
     e.preventDefault();
-    this.props.handleSubmit(e, this.state.email, this.state.password);
+    if(validator.validate(this.state.email) === true){
+      this.props.handleSubmit(e, this.state.email, this.state.password);
+    } else {
+      alert('Email not valid. Please try again.')
+    }
   }
 
   render(){
