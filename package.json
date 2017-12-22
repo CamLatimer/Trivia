@@ -5,7 +5,11 @@
   "license": "MIT",
   "scripts": {
     "build": "NODE_ENV=build webpack -p",
-    "start": "NODE_ENV=production node index.js"
+    "local": "NODE_ENV=production node index.js",
+    "start": "node index.js"
+  },
+  "engines":{
+    "node": "8.4.0"
   },
   "dependencies": {
     "array-shuffle": "^1.0.1",

@@ -6,7 +6,7 @@ const hotMiddlewareScript = 'webpack-hot-middleware/client';
 let config = {
   output: {
     path: __dirname + "/dist/js/", // path where bundled file gets put
-    publicPath: '/dist',  // path that the in-memory bundled files will get served from for middleware
+    publicPath: '/dist/js/',  // path that the in-memory bundled files will get served from for middleware
     filename: '[name].js' // [name] sets bundled file name to that of the original un-bundled file
   },
   module:{
@@ -30,7 +30,10 @@ function configMaker(env){
     },
     config.plugins = [
       new webpack.NoEmitOnErrorsPlugin(),
-      new webpack.HotModuleReplacementPlugin()
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.EnvironmentPlugin({
+        HOSTDOMAIN: 'https://still-ridge-33795.herokuapp.com'
+      })
     ];
     return config;
   } else if(env === 'build' ) {
@@ -38,7 +41,10 @@ function configMaker(env){
       client: __dirname + '/client/js/client.js',
     },
     config.plugins = [
-      new webpack.optimize.UglifyJsPlugin()
+      new webpack.optimize.UglifyJsPlugin(),
+      new webpack.EnvironmentPlugin({
+        HOSTDOMAIN: 'https://still-ridge-33795.herokuapp.com'
+      })
     ];
     return config;
   }

@@ -44,5 +44,5 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(process.env.PORT || 8080, () => {
-    console.log('The application is running on localhost:8080!');
+    console.log('The application is running!');
 });

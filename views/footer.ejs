@@ -1,3 +1,16 @@
-<script src="dist/client.js"></script>
+<% if(loggedIn === true){ %>
+  <script>
+    var isUserLoggedIn = true;
+    var userEmail = '<%= sessionEmail %>';
+    var attempts = <%= sessionScore.attempts %>;
+    var correct = <%= sessionScore.correct %>;
+    var accuracy = <%= sessionScore.accuracy %>;
+  </script>
+  <% } else { %>
+  <script>
+    var isUserLoggedIn = false;
+  </script>
+<%  }%>
+  <script src="dist/js/client.js"></script>
 </body>
 </html>

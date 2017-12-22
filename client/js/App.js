@@ -35,7 +35,7 @@ export default class App extends React.Component {
   // back to home screen
   logOut(e){
     e.preventDefault();
-    axios.put('http://localhost:3000/logout')
+    axios.put(`${process.env.HOSTDOMAIN}/logout`)
     .then((res) => {
       console.log(res);
       this.setState({
@@ -82,7 +82,7 @@ export default class App extends React.Component {
     saveBtn.innerHTML = 'Saving...'
     saveBtn.style.color = 'lightGrey';
 
-    axios.put('http://localhost:3000/accuracyUpdate', this.state)
+    axios.put(`${process.env.HOSTDOMAIN}/accuracyUpdate`, this.state)
     .then((res) => {
       // show that data has been saved after res from server is good
       setTimeout(() => {

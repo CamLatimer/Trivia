@@ -3,17 +3,4 @@
 <!-- inject script tag to let bundle.js know
 if user is logged in or not for a session, pass user info into page to be used by app
 on front end -->
-<% if(loggedIn === true){ %>
-  <script>
-    var isUserLoggedIn = true;
-    var userEmail = '<%= sessionEmail %>';
-    var attempts = <%= sessionScore.attempts %>;
-    var correct = <%= sessionScore.correct %>;
-    var accuracy = <%= sessionScore.accuracy %>;
-  </script>
-  <% } else { %>
-  <script>
-    var isUserLoggedIn = false;
-  </script>
-<%  }%>
 <%- include('footer') %>

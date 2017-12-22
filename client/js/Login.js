@@ -68,7 +68,7 @@ export default class Home extends React.Component{
     this.sendLogin = this.sendLogin.bind(this);
   }
   sendRegister(e, email, password){
-    axios.post('http://localhost:3000/register', {
+    axios.post(`${process.env.HOSTDOMAIN}/register`, {
       email: email,
       password: password
     })
@@ -82,7 +82,7 @@ export default class Home extends React.Component{
     });
   }
   sendLogin(e, email, password){
-    axios.put('http://localhost:3000/login', {
+    axios.put(`${process.env.HOSTDOMAIN}/login`, {
       email: email,
       password: password
     })
