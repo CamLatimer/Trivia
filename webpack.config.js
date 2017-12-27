@@ -32,7 +32,7 @@ function configMaker(env){
       new webpack.NoEmitOnErrorsPlugin(),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.EnvironmentPlugin({
-        HOSTDOMAIN: 'https://still-ridge-33795.herokuapp.com'
+        HOSTDOMAIN: 'http://localhost:3000'
       })
     ];
     return config;

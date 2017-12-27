@@ -4,8 +4,8 @@ export default function Header(props){
   if(props.loggedIn){
     return (
       <header>
+        <p>Trivially</p>
         <p className="header__greet">hello, {props.email}</p>
-
         <p className="header__accuracy">
           Accuracy: {props.score}%
           <a className="save saveWide" onClick={props.save}>Save</a>
@@ -19,7 +19,7 @@ export default function Header(props){
   } else {
     return (
       <header>
-        <h3 style={{alignSelf: 'center', paddingTop:'1.5rem'}}>hello there!</h3>
+        <h3 style={{alignSelf: 'center', paddingTop:'1.5rem'}}>Trivially</h3>
       </header>
     );
   }

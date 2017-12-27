@@ -22,7 +22,7 @@ header{
   box-shadow: 0px 0px 8px;
 }
 header p, .header__btnWrapper{
-  margin:.5rem 0;
+  margin:0;
 }
 .header__accuracy{
   order:0;
@@ -84,7 +84,9 @@ header p, .header__btnWrapper{
 .GameForm__input:placeholder-shown{
   font-style: italic; opacity: .4;
 }
-
+input[type='email'], input[type='number'], input[type='password'], input[type='search'], input[type='tel'], input[type='text'], input[type='url'], textarea, select{
+  border-color: gray;
+}
 // Game / questions
 .QuestionsContainer{
   position: relative;
@@ -108,7 +110,7 @@ header p, .header__btnWrapper{
 .answer{
   display: flex;
 }
-.answer__text, .answer__input{margin:0;}
+.answer__text, .answer__input{margin:0; cursor: pointer;}
 .answer__input{
   margin-right:1rem;
 }
