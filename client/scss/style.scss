@@ -21,6 +21,10 @@ header{
   padding:.5rem 1rem;
   box-shadow: 0px 0px 8px;
 }
+.header__title--out{
+  position: absolute; bottom: 0;
+  width: 100%; text-align: center;
+}
 header p, .header__btnWrapper{
   margin:0;
 }

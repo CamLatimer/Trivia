@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "dev": "gulp",
     "build": "NODE_ENV=build webpack -p",
     "local": "NODE_ENV=production node index.js",
     "start": "node index.js"
